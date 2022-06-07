@@ -4,11 +4,9 @@ Serve your radio in container.
 
 ## Configure
 
-environment variables in entrypoint.sh
+set environment variables in entrypoint.sh
 
-## Details
-
-You can configure settings via setting enviroment variables
+## Changes from fork
 
 - added mailcap
 for some file type support
