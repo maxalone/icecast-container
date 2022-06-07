@@ -2,42 +2,22 @@
 
 Serve your radio in container.
 
-## Example Run
-
-```bash
-root@a789a794-sv/container/icecast>docker run -it --rm -e authentication_source_password=sourcepw -p 8000:8000 ghcr.io/ahmetozer/icecast-container
-        Admin username is 'admin' and password is:   FGOt3cRGjrgLUc4F
-        authentication_source_password password is specified by user:             so...pw
-        authentication_relay_password password is:    qBBa5KFEKgDGJRfQ
-        Selected port is 8000/tcp
-        limits_clients 100
-        limits_sources 2
-        bind_address ::
-```
-
 ## Configure
+
+environment variables in entrypoint.sh
+
+## Details
 
 You can configure settings via setting enviroment variables
 
-- admin  
-Provides admin user name
+- added mailcap
+for some file type support
 
-- authentication_source_password  
-Password for source
+- added bash
+for console controls
 
-- authentication_relay_password  
-Password for relay
+- added dos2unix
+to delete windows crlf in entrypoint file
 
-- port  
-Bind Icecast for different port in container. This makes sense if you use with IPv6 in containers and without ingress proxy.
-
-- limits_clients  
-Client limit for the server
-
-- limits_sources  
-source limit for the server
-
-- bind_address
-Icecast bind address
-
-![image](https://github.com/ahmetozer/icecast-container/raw/docs/exampleStream.jpg)
+- added permission
+for log files
