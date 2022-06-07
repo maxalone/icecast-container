@@ -1,17 +1,21 @@
-FROM alpine
+FROM alpine:latest
+LABEL maintainer "infiniteproject@gmail.com"
 
-RUN apk add --no-cache icecast bash libcap && \
-setcap CAP_NET_BIND_SERVICE=+eip /usr/bin/icecast && \
-apk del  --no-cache libcap
+RUN addgroup -S icecast && \
+    adduser -S icecast
+RUN apk add dos2unix    
+RUN apk add --update \
+        icecast \
+        mailcap && \
+        rm -rf /var/cache/apk/*
+RUN apk add --no-cache bash
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+RUN dos2unix entrypoint.sh
+EXPOSE 8000
+RUN mkdir -p /var/log/icecast && \
+    chown -R 100:101 /var/log/icecast 
 
 
-WORKDIR /usr/share/icecast/
-COPY . .
-RUN mkdir -p /usr/share/icecast/log && \
-    chown -R 100:101 /usr/share/icecast && \
-    chown -R 100:101 /var/log/icecast && \
-    chown -R 100:101 /etc/icecast.xml && \
-    chmod +x entrypoint.sh
-USER icecast
-LABEL org.opencontainers.image.source="https://github.com/ahmetozer/icecast-container"
-ENTRYPOINT [ "/usr/share/icecast/entrypoint.sh" ]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD icecast -c /etc/icecast.xml
