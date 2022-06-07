@@ -32,7 +32,7 @@ else
     echo -e "\t${cl_cy}authentication_relay_password${cl_nc} password is specified by user:\t${cl_lg}${authentication_relay_password:0:2}***${authentication_relay_password:$((${#authentication_relay_password}-2))}${cl_nc}"
 fi
 
-port=${port-"8000"}
+port=${port-"8001"}
 if [[ "$port" =~ $port_regex ]]; then
     if (lsof -i :$port | grep TCP); then
         echo -e "${cl_red}Port already usage. Please select another port.${cl_nc}"
